@@ -1,0 +1,2570 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For God Angel 💜</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Lock scroll saat di home */
+body.lock-scroll {
+  overflow: hidden;
+  height: 100vh;
+}
+:root {
+  --purple-deep: #2d0a4e;
+  --purple-mid: #6b21a8;
+  --purple-soft: #a855f7;
+  --purple-light: #d8b4fe;
+  --purple-pale: #f3e8ff;
+  --pink-hot: #ec4899;
+  --pink-soft: #fbcfe8;
+  --gold: #fbbf24;
+  --white: #ffffff;
+  --text-bright: #f5f0ff;
+  --text-mid: #c084fc;
+  --text-dim: #9333ea;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--purple-deep);
+  color: var(--text-bright);
+  overflow-x: hidden;
+  
+}
+
+#particleCanvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.page {
+  display: none;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+#home.active {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: 1s ease;
+  transform: scale(1.05);
+  filter: blur(10px);
+  opacity: 0.4;
+}
+#letter.active {
+  display: flex;
+}
+#game.active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#secret-lock.active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#secret-content.active {
+  display: block;
+}
+
+/* ===== NAV ===== */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+}
+.nav-inner {
+  background: rgba(45, 10, 78, 0.7);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  border-radius: 60px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 8px 32px rgba(107,33,168,0.4), inset 0 1px 0 rgba(216,180,254,0.2);
+}
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  color: var(--purple-light);
+  padding: 6px 16px;
+  font-style: italic;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+.nav-sep { width: 1px; height: 24px; background: rgba(168,85,247,0.3); margin: 0 4px; }
+.nav-btn {
+  background: transparent;
+  border: none;
+  color: rgba(216,180,254,0.7);
+  padding: 8px 16px;
+  border-radius: 40px;
+  font-size: 13px;
+  
+  font-family: 'Outfit', sans-serif;
+  font-weight: 400;
+  transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  position: relative;
+  white-space: nowrap;
+}
+.nav-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 40px;
+  background: linear-gradient(135deg, rgba(168,85,247,0.3), rgba(236,72,153,0.2));
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.nav-btn:hover, .nav-btn.active-nav {
+  color: #fff;
+  transform: translateY(-1px);
+}
+.nav-btn:hover::after, .nav-btn.active-nav::after { opacity: 1; }
+.nav-btn.active-nav {
+  background: linear-gradient(135deg, rgba(168,85,247,0.5), rgba(236,72,153,0.3));
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(168,85,247,0.4);
+}
+.nav-lock {
+  background: linear-gradient(135deg, #9333ea, #ec4899);
+  border: none;
+  color: #fff;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  font-size: 14px;
+  
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.3s;
+  box-shadow: 0 4px 12px rgba(147,51,234,0.5);
+}
+.nav-lock:hover { transform: scale(1.1) rotate(10deg); box-shadow: 0 6px 20px rgba(236,72,153,0.5); }
+
+/* ===== HOME PAGE ===== */
+#home {
+  min-height: 100vh;
+  text-align: center;
+  padding: 120px 24px 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+.home-bg-orbs {
+  position: absolute; inset: 0;
+  pointer-events: none; overflow: hidden;
+}
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  animation: orbFloat 8s ease-in-out infinite;
+}
+.orb-1 { width: 500px; height: 500px; background: rgba(107,33,168,0.4); top: -100px; left: -100px; animation-delay: 0s; }
+.orb-2 { width: 400px; height: 400px; background: rgba(236,72,153,0.25); top: 50%; right: -100px; animation-delay: 3s; }
+.orb-3 { width: 300px; height: 300px; background: rgba(168,85,247,0.3); bottom: -50px; left: 30%; animation-delay: 6s; }
+
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0,0) scale(1); }
+  33% { transform: translate(30px, -20px) scale(1.05); }
+  66% { transform: translate(-20px, 30px) scale(0.95); }
+}
+
+.stars-bg {
+  position: absolute; inset: 0;
+  overflow: hidden; pointer-events: none;
+}
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle var(--dur) ease-in-out infinite;
+  animation-delay: var(--delay);
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.1; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.5); }
+}
+
+.home-content { position: relative; z-index: 2; max-width: 600px; }
+
+.birthday-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(168,85,247,0.2);
+  border: 1px solid rgba(216,180,254,0.3);
+  border-radius: 40px;
+  padding: 8px 20px;
+  font-size: 13px;
+  color: var(--purple-light);
+  margin-bottom: 32px;
+  animation: fadeUp 0.8s ease 0.2s both;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.badge-dot {
+  width: 6px; height: 6px;
+  background: var(--pink-hot);
+  border-radius: 50%;
+  animation: pulse-dot 1.5s ease infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0.5; }
+}
+
+.home-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(52px, 10vw, 88px);
+  font-weight: 300;
+  line-height: 1.05;
+  color: #fff;
+  margin-bottom: 16px;
+  animation: fadeUp 0.8s ease 0.4s both;
+}
+.home-title .highlight {
+  font-style: italic;
+  background: linear-gradient(135deg, #d8b4fe, #ec4899, #fbbf24);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.home-subtitle {
+  font-size: 16px;
+  color: var(--purple-light);
+  margin-bottom: 48px;
+  font-weight: 300;
+  line-height: 1.7;
+  animation: fadeUp 0.8s ease 0.6s both;
+}
+
+.home-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeUp 0.8s ease 0.8s both;
+}
+.btn-primary {
+  background: linear-gradient(135deg, #7c3aed, #ec4899);
+  color: #fff;
+  border: none;
+  padding: 16px 40px;
+  border-radius: 60px;
+  font-size: 16px;
+  
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  box-shadow: 0 8px 32px rgba(124,58,237,0.5);
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #9333ea, #f472b6);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.btn-primary:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 16px 48px rgba(124,58,237,0.6); }
+.btn-primary:hover::before { opacity: 1; }
+.btn-primary span { position: relative; z-index: 1; }
+
+.btn-secondary {
+  background: rgba(216,180,254,0.1);
+  color: var(--purple-light);
+  border: 1px solid rgba(216,180,254,0.3);
+  padding: 16px 40px;
+  border-radius: 60px;
+  font-size: 16px;
+  
+  font-family: 'Outfit', sans-serif;
+  font-weight: 400;
+  transition: all 0.3s;
+  backdrop-filter: blur(10px);
+}
+.btn-secondary:hover { background: rgba(216,180,254,0.2); color: #fff; border-color: rgba(216,180,254,0.5); transform: translateY(-2px); }
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: rgba(216,180,254,0.4);
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  animation: fadeIn 2s ease 2s both;
+}
+.scroll-line {
+  width: 1px; height: 40px;
+  background: linear-gradient(to bottom, rgba(216,180,254,0.4), transparent);
+  animation: scrollDown 2s ease infinite;
+}
+@keyframes scrollDown {
+  0% { transform: scaleY(0); transform-origin: top; }
+  50% { transform: scaleY(1); transform-origin: top; }
+  51% { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; } to { opacity: 1; }
+}
+
+/* ===== LETTER PAGE ===== */
+#letter {
+  min-height: 100vh;
+  padding: 120px 24px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+#letter .page-deco {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 20% 50%, rgba(236,72,153,0.15) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 50%, rgba(168,85,247,0.15) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.envelope-wrapper {
+  max-width: 640px;
+  width: 100%;
+  position: relative;
+}
+.envelope-flap {
+  background: linear-gradient(135deg, rgba(107,33,168,0.6), rgba(45,10,78,0.8));
+  border: 1px solid rgba(168,85,247,0.4);
+  border-radius: 24px 24px 0 0;
+  padding: 16px 40px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  border-bottom: none;
+}
+.envelope-flap-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  color: var(--purple-light);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-style: italic;
+}
+
+.letter-card {
+  background: linear-gradient(160deg, rgba(45,10,78,0.95) 0%, rgba(30,5,60,0.98) 100%);
+  border: 1px solid rgba(168,85,247,0.35);
+  border-radius: 0 0 28px 28px;
+  padding: 52px 48px;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(216,180,254,0.05) inset;
+  position: relative;
+  overflow: hidden;
+  animation: letterReveal 0.8s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes letterReveal {
+  from { opacity: 0; transform: translateY(60px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.letter-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #a855f7, #ec4899, #a855f7, transparent);
+}
+.letter-card::after {
+  content: '💌';
+  position: absolute;
+  top: -20px; right: 40px;
+  font-size: 48px;
+  opacity: 0.15;
+  transform: rotate(15deg);
+}
+
+.letter-to {
+  font-size: 12px;
+  color: var(--text-mid);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.letter-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 40px;
+  font-weight: 300;
+  font-style: italic;
+  background: linear-gradient(135deg, #d8b4fe, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 36px;
+}
+.letter-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(168,85,247,0.4), transparent);
+  margin-bottom: 32px;
+}
+.letter-body {
+  font-size: 16px;
+  line-height: 1.95;
+  color: rgba(240,220,255,0.9);
+  font-weight: 300;
+}
+.letter-body p { margin-bottom: 20px; }
+.letter-body em {
+  font-style: italic;
+  color: #f0abfc;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+}
+.letter-sign {
+  margin-top: 70px;
+  text-align: right;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-style: italic;
+  color: var(--purple-light);
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.letter-sign-sub {
+  font-size: 13px;
+  color: rgba(216,180,254,0.5);
+  letter-spacing: 1px;
+  margin-top: 4px;
+  font-family: 'Outfit', sans-serif;
+  font-style: normal;
+}
+.floating-hearts {
+  position: absolute;
+  right: -10px; bottom: 60px;
+  pointer-events: none;
+}
+.fh {
+  position: absolute;
+  font-size: 20px;
+  animation: floatHeart var(--dur) ease-in-out infinite;
+  animation-delay: var(--delay);
+}
+@keyframes floatHeart {
+  0%, 100% { transform: translateY(0) rotate(-10deg); opacity: 0.3; }
+  50% { transform: translateY(-30px) rotate(10deg); opacity: 0.8; }
+}
+
+/* ===== GAME PAGE ===== */
+#game {
+  min-height: 100vh;
+  padding: 120px 24px 60px;
+  position: relative;
+}
+#game .page-deco {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 80% 20%, rgba(236,72,153,0.2) 0%, transparent 50%);
+  pointer-events: none;
+}
+.game-container {
+  background: rgba(30,5,60,0.8);
+  backdrop-filter: blur(20px);
+  max-width: 580px;
+  width: 100%;
+  border-radius: 32px;
+  padding: 48px 40px;
+  border: 1px solid rgba(168,85,247,0.3);
+  box-shadow: 0 40px 80px rgba(0,0,0,0.4), 0 0 60px rgba(107,33,168,0.2);
+  position: relative; z-index: 1;
+  animation: gameReveal 0.6s ease;
+}
+@keyframes gameReveal {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+.game-header { text-align: center; margin-bottom: 36px; }
+.game-header h2 { font-family: 'Cormorant Garamond', serif; font-size: 36px; color: #fff; font-weight: 300; margin-bottom: 8px; font-style: italic; }
+.game-header p { color: rgba(216,180,254,0.6); font-size: 14px; }
+
+.progress-track {
+  background: rgba(168,85,247,0.15);
+  border-radius: 10px;
+  height: 6px;
+  margin-bottom: 32px;
+  overflow: hidden;
+  position: relative;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #7c3aed, #ec4899);
+  border-radius: 10px;
+  transition: width 0.6s cubic-bezier(0.34,1.56,0.64,1);
+  box-shadow: 0 0 10px rgba(168,85,247,0.5);
+}
+
+.question-label { font-size: 11px; color: var(--pink-hot); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 12px; }
+.question-text { font-family: 'Cormorant Garamond', serif; font-size: 24px; color: #fff; font-weight: 300; margin-bottom: 28px; line-height: 1.4; }
+
+.answers-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+.answer-btn {
+  background: rgba(107,33,168,0.2);
+  border: 1px solid rgba(168,85,247,0.2);
+  border-radius: 16px;
+  padding: 16px 14px;
+  font-size: 14px;
+  color: rgba(240,220,255,0.85);
+  
+  font-family: 'Outfit', sans-serif;
+  transition: all 0.25s;
+  text-align: left;
+  line-height: 1.4;
+  font-weight: 300;
+  position: relative;
+  overflow: hidden;
+}
+.answer-btn::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(168,85,247,0.3), rgba(236,72,153,0.2));
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.answer-btn:hover { border-color: rgba(168,85,247,0.5); color: #fff; transform: scale(1.02); }
+.answer-btn:hover::before { opacity: 1; }
+.answer-btn.correct { background: rgba(16,185,129,0.2); border-color: #10b981; color: #6ee7b7; }
+.answer-btn.correct::before { display: none; }
+.answer-btn.wrong { background: rgba(239,68,68,0.2); border-color: #ef4444; color: #fca5a5; }
+.answer-btn.wrong::before { display: none; }
+
+.feedback-pill {
+  padding: 12px 20px;
+  border-radius: 50px;
+  font-size: 14px;
+  text-align: center;
+  display: none;
+  margin-bottom: 16px;
+  animation: pillIn 0.4s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes pillIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+.feedback-pill.show { display: block; }
+.feedback-pill.correct-fb { background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.3); color: #6ee7b7; }
+.feedback-pill.wrong-fb { background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.3); color: #fca5a5; }
+
+.next-btn {
+  background: linear-gradient(135deg, #7c3aed, #ec4899);
+  color: #fff;
+  border: none;
+  padding: 14px 40px;
+  border-radius: 50px;
+  font-size: 15px;
+  
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500;
+  width: 100%;
+  display: none;
+  transition: all 0.3s;
+  box-shadow: 0 8px 24px rgba(124,58,237,0.4);
+}
+.next-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(236,72,153,0.4); }
+
+.game-result { display: none; text-align: center; }
+.result-glow {
+  font-size: 72px;
+  margin-bottom: 16px;
+  filter: drop-shadow(0 0 20px rgba(251,191,36,0.5));
+}
+.result-score {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 80px;
+  font-weight: 300;
+  background: linear-gradient(135deg, #d8b4fe, #fbbf24);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.result-title { font-family: 'Cormorant Garamond', serif; font-size: 28px; color: #fff; margin-bottom: 8px; }
+.result-sub { color: rgba(216,180,254,0.7); font-size: 15px; line-height: 1.6; font-weight: 300; margin-bottom: 32px; }
+.replay-btn {
+  background: transparent;
+  border: 1px solid rgba(168,85,247,0.4);
+  color: var(--purple-light);
+  padding: 12px 32px;
+  border-radius: 50px;
+  font-size: 14px;
+  
+  font-family: 'Outfit', sans-serif;
+  transition: all 0.3s;
+}
+.replay-btn:hover { background: rgba(168,85,247,0.2); color: #fff; border-color: rgba(168,85,247,0.7); }
+
+/* ===== SECRET LOCK ===== */
+#secret-lock {
+  min-height: 100vh;
+  padding: 80px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.lock-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 50%, rgba(107,33,168,0.5) 0%, rgba(45,10,78,0.8) 50%, rgba(15,3,30,1) 100%);
+}
+.lock-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(168,85,247,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(168,85,247,0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: gridMove 20s linear infinite;
+}
+@keyframes gridMove {
+  from { transform: perspective(500px) rotateX(30deg) translateY(0); }
+  to { transform: perspective(500px) rotateX(30deg) translateY(40px); }
+}
+
+.lock-container {
+  position: relative; z-index: 2;
+  text-align: center;
+  max-width: 380px;
+  width: 100%;
+}
+.lock-ring {
+  width: 100px; height: 100px;
+  margin: 0 auto 32px;
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+}
+.lock-ring::before, .lock-ring::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid rgba(168,85,247,0.3);
+  animation: lockRing 3s ease infinite;
+}
+.lock-ring::before { inset: 0; animation-delay: 0s; }
+.lock-ring::after { inset: -12px; animation-delay: 1.5s; border-width: 1px; border-color: rgba(236,72,153,0.2); }
+@keyframes lockRing {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.05); opacity: 1; }
+}
+.lock-icon-inner { font-size: 48px; animation: lockPulse 2s ease infinite; }
+@keyframes lockPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); filter: drop-shadow(0 0 12px rgba(168,85,247,0.8)); }
+}
+
+.lock-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px;
+  font-weight: 300;
+  color: #fff;
+  margin-bottom: 8px;
+  font-style: italic;
+}
+.lock-sub { color: rgba(216,180,254,0.5); font-size: 14px; margin-bottom: 40px; font-weight: 300; }
+
+.pin-display { display: flex; gap: 12px; justify-content: center; margin-bottom: 36px; }
+.pin-dot {
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  border: 2px solid rgba(168,85,247,0.4);
+  transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+.pin-dot.filled {
+  background: linear-gradient(135deg, #a855f7, #ec4899);
+  border-color: transparent;
+  box-shadow: 0 0 20px rgba(168,85,247,0.6);
+  transform: scale(1.2);
+}
+
+.pin-pad { display: grid; grid-template-columns: repeat(3, 72px); gap: 16px; justify-content: center; }
+.pin-key {
+  width: 72px; height: 72px;
+  background: rgba(107,33,168,0.2);
+  border: 1px solid rgba(168,85,247,0.2);
+  border-radius: 50%;
+  color: rgba(240,220,255,0.9);
+  font-size: 22px;
+  
+  font-family: 'Outfit', sans-serif;
+  font-weight: 400;
+  transition: all 0.2s cubic-bezier(0.34,1.56,0.64,1);
+  backdrop-filter: blur(10px);
+}
+.pin-key:hover { background: rgba(168,85,247,0.35); border-color: rgba(168,85,247,0.5); color: #fff; transform: scale(1.08); box-shadow: 0 8px 24px rgba(107,33,168,0.4); }
+.pin-key:active { transform: scale(0.92); }
+
+.wrong-pin-msg { color: rgba(252,165,165,0.8); font-size: 13px; margin-top: 20px; height: 20px; }
+@keyframes wrongShake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-8px); }
+  40%, 80% { transform: translateX(8px); }
+}
+
+/* ===== MEMORY LOADER ===== */
+
+.memory-loader{
+  position:absolute;
+  inset:0;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(80,20,120,0.4),
+      rgba(10,0,30,0.96)
+    );
+
+  backdrop-filter:blur(12px);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  z-index:50;
+
+  transition:0.8s;
+}
+
+.memory-loader.hide{
+  opacity:0;
+  pointer-events:none;
+}
+
+.memory-loader-inner{
+  text-align:center;
+}
+
+.memory-loader-ring{
+  width:90px;
+  height:90px;
+
+  border-radius:50%;
+  border:2px solid rgba(255,255,255,0.08);
+  border-top:2px solid #ec4899;
+
+  animation:memorySpin 1s linear infinite;
+
+  margin:auto;
+  margin-bottom:24px;
+}
+
+.memory-loader-text{
+  color:rgba(240,220,255,0.7);
+
+  font-size:14px;
+  letter-spacing:4px;
+  text-transform:uppercase;
+}
+
+@keyframes memorySpin{
+  from{
+    transform:rotate(0deg);
+  }
+
+  to{
+    transform:rotate(360deg);
+  }
+}
+
+/* ===== SECRET CONTENT ===== */
+#secret-content {
+  min-height: 100vh;
+  padding: 100px 24px 60px;
+  position: relative;
+}
+.secret-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 30%, rgba(107,33,168,0.4) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(236,72,153,0.3) 0%, transparent 50%),
+    linear-gradient(160deg, #0f0320, #1a0533, #0f0320);
+  pointer-events: none;
+}
+.secret-inner { max-width: 640px; margin: 0 auto; position: relative; z-index: 1; }
+
+.secret-header { text-align: center; margin-bottom: 48px; }
+.secret-crown { font-size: 48px; margin-bottom: 16px; animation: crownFloat 3s ease infinite; }
+@keyframes crownFloat {
+  0%, 100% { transform: translateY(0) rotate(-5deg); }
+  50% { transform: translateY(-10px) rotate(5deg); }
+}
+.secret-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 48px;
+  font-weight: 300;
+  font-style: italic;
+  background: linear-gradient(135deg, #d8b4fe, #fbbf24, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 8px;
+}
+.secret-sub { color: rgba(216,180,254,0.5); font-weight: 300; font-size: 15px; }
+
+.secret-item {
+  background: rgba(107,33,168,0.12);
+  border: 1px solid rgba(168,85,247,0.2);
+  border-radius: 24px;
+  padding: 28px 32px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  animation: secretItemIn 0.6s ease both;
+  position: relative;
+  overflow: hidden;
+}
+.secret-item::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: linear-gradient(to bottom, #a855f7, #ec4899);
+  border-radius: 3px 0 0 3px;
+}
+.secret-item:hover {
+  background: rgba(107,33,168,0.25);
+  border-color: rgba(168,85,247,0.4);
+  transform: translateX(8px);
+  box-shadow: 0 8px 40px rgba(107,33,168,0.3);
+}
+@keyframes secretItemIn {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.secret-item:nth-child(1) { animation-delay: 0.1s; }
+.secret-item:nth-child(2) { animation-delay: 0.2s; }
+.secret-item:nth-child(3) { animation-delay: 0.3s; }
+.secret-item:nth-child(4) { animation-delay: 0.4s; }
+.secret-item:nth-child(5) { animation-delay: 0.5s; }
+
+.secret-num-wrap {
+  flex-shrink: 0;
+  width: 40px; height: 40px;
+  background: linear-gradient(135deg, rgba(168,85,247,0.3), rgba(236,72,153,0.2));
+  border: 1px solid rgba(168,85,247,0.3);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  color: var(--purple-light);
+  font-style: italic;
+}
+.secret-text { color: rgba(240,220,255,0.85); font-size: 15px; line-height: 1.8; font-weight: 300; }
+.secret-text strong { color: #f0abfc; font-weight: 500; }
+
+/* ===== MEMORY GALLERY ===== */
+
+.memory-title{
+  font-family:'Great Vibes', cursive;
+  font-size:72px;
+  font-weight:400;
+  line-height:1.3;
+  text-align:center;
+
+  background:linear-gradient(
+    135deg,
+    #ffffff,
+    #f3e8ff,
+    #ec4899,
+    #fbbf24
+  );
+
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+
+  margin-bottom:24px;
+
+  text-shadow:
+    0 0 30px rgba(236,72,153,0.25);
+
+  animation:titleGlow 4s ease-in-out infinite;
+}
+
+@keyframes titleGlow{
+  0%,100%{
+    transform:translateY(0px);
+    filter:drop-shadow(0 0 10px rgba(236,72,153,0.2));
+  }
+
+  50%{
+    transform:translateY(-4px);
+    filter:drop-shadow(0 0 20px rgba(168,85,247,0.35));
+  }
+}
+
+.memory-desc{
+  font-size:16px;
+  line-height:1.8;
+  color:rgba(240,220,255,0.8);
+}
+
+.memory-gallery{
+  margin-top:50px;
+}
+
+.gallery-title{
+  font-family:'Cormorant Garamond', serif;
+  font-size:30px;
+  color:#d8b4fe;
+  margin-bottom:24px;
+  text-align:center;
+  font-style:italic;
+}
+
+.photo-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+
+.video-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px;
+}
+
+.media-card{
+  background:rgba(107,33,168,0.15);
+  border:1px solid rgba(168,85,247,0.2);
+  border-radius:22px;
+  overflow:hidden;
+  padding:12px;
+  transition:0.3s;
+}
+
+.media-card:hover{
+  transform:translateY(-6px);
+  border-color:rgba(168,85,247,0.5);
+  box-shadow:0 15px 40px rgba(107,33,168,0.35);
+}
+
+.media-card img,
+.media-card video{
+  width:100%;
+  border-radius:16px;
+  display:block;
+  object-fit:cover;
+}
+
+.media-card video{
+  aspect-ratio:9/16;
+  background:#000;
+}
+
+.download-btn{
+  display:block;
+  margin-top:12px;
+  text-align:center;
+  padding:10px;
+  border-radius:14px;
+  text-decoration:none;
+  color:#fff;
+  background:linear-gradient(135deg,#7c3aed,#ec4899);
+  font-size:14px;
+  transition:0.3s;
+}
+
+.download-btn:hover{
+  transform:scale(1.03);
+}
+
+.gift-btn-wrap{
+  display:flex;
+  justify-content:center;
+  margin-top:60px;
+}
+
+.gift-btn{
+  padding:18px 42px;
+  border:none;
+  border-radius:60px;
+  background:linear-gradient(135deg,#7c3aed,#ec4899);
+  color:#fff;
+  font-size:18px;
+  font-family:'Outfit',sans-serif;
+  cursor:pointer;
+  transition:0.3s;
+  box-shadow:0 12px 40px rgba(124,58,237,0.4);
+}
+
+.gift-btn:hover{
+  transform:translateY(-4px) scale(1.04);
+  box-shadow:0 18px 50px rgba(236,72,153,0.4);
+}
+
+@media(max-width:700px){
+
+  .photo-grid{
+    grid-template-columns:1fr;
+  }
+
+  .video-grid{
+    grid-template-columns:1fr;
+  }
+
+  .memory-title{
+    font-size:38px;
+  }
+
+}
+.achievement-box{
+
+  margin:28px auto 0;
+
+  width:fit-content;
+
+  padding:16px 24px;
+
+  border-radius:20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(124,58,237,0.18),
+      rgba(236,72,153,0.12)
+    );
+
+  border:1px solid rgba(255,255,255,0.08);
+
+  backdrop-filter:blur(12px);
+
+  animation:
+    achievementPop 1s cubic-bezier(.34,1.56,.64,1);
+}
+
+.achievement-label{
+
+  font-size:11px;
+
+  letter-spacing:4px;
+
+  text-transform:uppercase;
+
+  color:rgba(240,220,255,0.5);
+
+  margin-bottom:6px;
+}
+
+.achievement-title{
+
+  font-size:18px;
+
+  color:white;
+
+  font-weight:600;
+}
+
+@keyframes achievementPop{
+
+  from{
+    opacity:0;
+    transform:scale(0.8);
+  }
+
+  to{
+    opacity:1;
+    transform:scale(1);
+  }
+}
+/* ===== CLICK RIPPLE ===== */
+.ripple {
+  position: fixed;
+  border-radius: 50%;
+  background: rgba(168,85,247,0.3);
+  pointer-events: none;
+  z-index: 9000;
+  animation: rippleOut 0.6s ease forwards;
+}
+@keyframes rippleOut {
+  from { width: 0; height: 0; opacity: 0.8; transform: translate(-50%,-50%) scale(0); }
+  to { width: 80px; height: 80px; opacity: 0; transform: translate(-50%,-50%) scale(1); }
+}
+
+/* ===== FLOATING PARTICLES ===== */
+.sparkle {
+  position: fixed;
+  pointer-events: none;
+  z-index: 8999;
+  font-size: 16px;
+  animation: sparkleUp 1s ease forwards;
+}
+@keyframes sparkleUp {
+  from { opacity: 1; transform: translateY(0) scale(1); }
+  to { opacity: 0; transform: translateY(-60px) scale(0); }
+}
+
+@media (max-width: 600px) {
+  .home-title { font-size: 42px; }
+  .letter-card { padding: 32px 24px; }
+  .game-container { padding: 32px 24px; }
+  .answers-grid { grid-template-columns: 1fr; }
+  .nav-inner { padding: 6px 8px; gap: 2px; }
+  .nav-btn { padding: 6px 10px; font-size: 12px; }
+}
+/* INTRO SCREEN */
+#introScreen{
+  position:fixed;
+  inset:0;
+
+  backdrop-filter: blur(18px);
+  background: rgba(5,5,15,0.78);
+
+  width:100%;
+  height:100vh;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(80,20,120,0.35),
+      rgba(10,0,30,0.98)
+    );
+
+  backdrop-filter:blur(12px);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  overflow:hidden;
+
+  z-index:999999999;
+
+  transition:
+    opacity 0.8s ease,
+    visibility 0.8s ease;
+}
+
+.intro-content{
+  position:relative;
+  z-index:2;
+
+  width:100%;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+
+  text-align:center;
+}
+
+/* ===== COUNTDOWN INTRO ===== */
+
+.countdown-wrap{
+  text-align:center;
+}
+
+.countdown-number{
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:160px;
+  font-weight:700;
+
+  line-height:1;
+
+  background:linear-gradient(
+    135deg,
+    #ffffff,
+    #d8b4fe,
+    #ec4899
+  );
+
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+
+  filter:
+    drop-shadow(0 0 25px rgba(168,85,247,0.35));
+
+  animation:countPulse 1s ease;
+}
+
+.countdown-sub{
+
+  margin-top:20px;
+
+  font-size:15px;
+  letter-spacing:4px;
+  text-transform:uppercase;
+
+  color:rgba(240,220,255,0.65);
+}
+
+@keyframes countPulse{
+
+  0%{
+    opacity:0;
+    transform:scale(0.5);
+    filter:blur(20px);
+  }
+
+  60%{
+    opacity:1;
+    transform:scale(1.08);
+    filter:blur(0px);
+  }
+
+  100%{
+    transform:scale(1);
+  }
+}
+
+/* ===== SECRET LONG TEXT CARD (SAFE VERSION) ===== */
+.secret-long-text {
+  position: relative;
+  margin-top: 40px;
+  border-radius: 24px;
+  padding: 2px;
+
+  background: linear-gradient(
+    135deg,
+    #a855f7,
+    #ec4899,
+    #fbbf24
+  );
+
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.6),
+    0 0 40px rgba(168,85,247,0.25);
+    animation:
+  secretFloat 5s ease-in-out infinite;
+}
+
+/* inner card */
+.secret-long-text::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: 22px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(30, 5, 60, 0.95),
+    rgba(60, 10, 90, 0.85)
+  );
+
+  z-index: 1;
+}
+
+/* overlay cinematic */
+.cinematic-overlay {
+  position: absolute;
+  inset: 2px;
+  border-radius: 22px;
+
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.3),
+    rgba(0,0,0,0.55)
+  );
+
+  z-index: 2;
+}
+
+/* isi teks */
+.cinematic-content {
+  position: relative;
+  z-index: 3;
+
+  padding: 40px 36px;
+
+  color: rgba(240, 220, 255, 0.9);
+  font-size: 15px;
+  line-height: 1.9;
+
+  text-align: center;     
+  max-width: 520px;        
+  margin: 0 auto;         
+}
+
+/* hover biar hidup */
+.secret-long-text:hover {
+  transform: translateY(-4px);
+  transition: 0.3s;
+  box-shadow:
+    0 30px 80px rgba(0,0,0,0.7),
+    0 0 60px rgba(168,85,247,0.35);
+}
+.memory-button-wrap{
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.memory-button{
+    position:relative;
+
+    text-decoration:none;
+
+    padding:18px 34px;
+
+    border-radius:22px;
+
+    background:
+      linear-gradient(
+        135deg,
+        rgba(124,58,237,0.25),
+        rgba(236,72,153,0.18)
+      );
+
+    backdrop-filter:blur(18px);
+
+    color:white;
+
+    font-size:17px;
+    font-weight:600;
+    letter-spacing:0.5px;
+
+    transition:0.35s;
+
+    border:1px solid rgba(255,255,255,0.12);
+
+    overflow:hidden;
+
+    box-shadow:
+      0 10px 30px rgba(124,58,237,0.25);
+}
+.memory-button::before{
+    content:"";
+
+    position:absolute;
+    top:0;
+    left:-120%;
+
+    width:80%;
+    height:100%;
+
+    background:
+      linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,0.25),
+        transparent
+      );
+
+    transform:skewX(-25deg);
+
+    transition:0.8s;
+}
+
+.memory-button:hover::before{
+    left:140%;
+}
+
+.memory-button:hover{
+    transform:
+      translateY(-4px)
+      scale(1.04);
+
+    box-shadow:
+      0 18px 45px rgba(236,72,153,0.35);
+}
+/* ===== NEW GIFT POPUP ===== */
+
+.gift-popup{
+    position:fixed;
+    inset:0;
+
+    background:rgba(0,0,0,0.7);
+    backdrop-filter:blur(12px);
+
+    display:none;
+    align-items:center;
+    justify-content:center;
+
+    z-index:999999;
+
+    padding:20px;
+}
+
+.gift-popup.show{
+    display:flex;
+}
+
+.gift-card{
+    width:100%;
+    max-width:500px;
+
+    background:linear-gradient(
+        135deg,
+        rgba(40,10,70,0.96),
+        rgba(70,20,100,0.92)
+    );
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    border-radius:30px;
+
+    padding:40px 32px;
+
+    position:relative;
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.6),
+        0 0 40px rgba(168,85,247,0.3);
+
+    animation:giftPop 0.4s cubic-bezier(.34,1.56,.64,1);
+}
+
+@keyframes giftPop{
+    from{
+        opacity:0;
+        transform:scale(0.8) translateY(20px);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1) translateY(0);
+    }
+}
+
+.gift-close{
+    position:absolute;
+    top:18px;
+    right:18px;
+
+    width:38px;
+    height:38px;
+
+    border:none;
+    border-radius:50%;
+
+    background:rgba(255,255,255,0.08);
+
+    color:white;
+    font-size:16px;
+
+    cursor:pointer;
+}
+
+.gift-slide{
+    display:none;
+    text-align:center;
+
+    animation:giftSlideIn 0.45s ease;
+}
+
+.gift-slide.active-slide{
+    display:block;
+}
+
+.gift-emoji{
+    font-size:72px;
+    margin-bottom:20px;
+}
+
+.gift-title{
+    font-family:'Cormorant Garamond', serif;
+    font-size:42px;
+
+    margin-bottom:20px;
+
+    background:linear-gradient(
+        135deg,
+        #fff,
+        #d8b4fe,
+        #ec4899
+    );
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.gift-text{
+    color:rgba(240,220,255,0.85);
+    line-height:1.9;
+    font-size:16px;
+
+    margin-bottom:28px;
+}
+
+.gift-actions{
+    display:flex;
+    gap:12px;
+    justify-content:center;
+}
+
+.gift-next-btn,
+.gift-back-btn{
+    border:none;
+    padding:14px 24px;
+    border-radius:18px;
+
+    cursor:pointer;
+
+    color:white;
+    font-size:15px;
+
+    transition:0.3s;
+}
+
+.gift-next-btn{
+    background:linear-gradient(
+        135deg,
+        #7c3aed,
+        #ec4899
+    );
+}
+
+.gift-back-btn{
+    background:rgba(255,255,255,0.08);
+}
+
+.gift-next-btn:hover,
+.gift-back-btn:hover{
+    transform:scale(1.05);
+}
+@keyframes secretFloat{
+
+  0%,100%{
+    transform:translateY(0px);
+  }
+
+  50%{
+    transform:translateY(-8px);
+  }
+}
+
+@keyframes giftSlideIn{
+
+  from{
+    opacity:0;
+    transform:
+      translateY(18px)
+      scale(0.96);
+  }
+
+  to{
+    opacity:1;
+    transform:
+      translateY(0px)
+      scale(1);
+  }
+}
+</style>
+</head>
+<body ontouchstart="">
+
+<!-- INTRO OVERLAY -->
+<div id="introScreen">
+  <div class="intro-content">
+
+    <div class="countdown-wrap">
+
+<!-- TEXT AWAL -->
+<div
+  id="introText"
+  style="
+  font-family:'Outfit', sans-serif;
+  font-size:28px;
+  font-weight:700;
+  letter-spacing:1px;
+  background:linear-gradient(
+    135deg,
+    #ffffff,
+    #d8b4fe,
+    #ec4899
+  );
+
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+
+  margin-bottom:28px;
+
+  opacity:1;
+  transition:0.5s;
+
+  text-shadow:
+    0 0 25px rgba(168,85,247,0.35);
+
+  filter:
+    drop-shadow(0 0 12px rgba(236,72,153,0.2));
+"
+>
+  Hello Princess 💜
+</div>
+  <!-- COUNTDOWN -->
+  <div 
+    id="countdownNumber"
+    class="countdown-number"
+    style="display:none;"
+  >
+    3
+  </div>
+
+  <div class="countdown-sub">
+    a little surprise is waiting...
+  </div>
+
+</div>
+
+  </div>
+</div>
+
+<!-- Particle Canvas -->
+<canvas id="particleCanvas"></canvas>
+
+<!-- Audio Element -->
+<audio id="bgAudio" src="https://files.catbox.moe/o9w4ij.mp3" loop></audio>
+
+<!-- HOME PAGE -->
+<div id="home" class="page active">
+  <div class="home-bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+  <div class="stars-bg" id="starsHome"></div>
+  <nav><div class="nav-inner" id="navHome"></div></nav>
+  <div class="home-content">
+    <div class="birthday-badge">
+      <span class="badge-dot"></span>
+      <span>A Little Surprise For You</span>
+      <span class="badge-dot"></span>
+    </div>
+    <h1 class="home-title">
+      Happy Birthday<br>
+      <span class="highlight">God Angel</span>
+    </h1>
+    <p class="home-subtitle">Ada sesuatu yang aku simpan buat kamu di ikon gembok itu.<br>Tapi jangan buru-buru... baca surat dulu terus jawab kuis yaa 💜</p>
+    <div class="home-actions">
+      <button class="btn-primary" onclick="showPage('letter');playClick()"><span>💌 Buka Surat</span></button>
+      <button class="btn-secondary" onclick="showPage('game');playClick()">🎮 Kuis</button>
+    </div>
+  </div>
+</div>
+
+<!-- LETTER PAGE -->
+<div id="letter" class="page">
+  <div class="page-deco"></div>
+  <nav style="position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;justify-content:center;padding-top:20px;">
+    <div class="nav-inner" id="navLetter"></div>
+  </nav>
+  <div class="envelope-wrapper" style="position:relative;z-index:2;">
+    <div class="envelope-flap">
+      <span style="font-size:16px;opacity:0.5;">✦</span>
+      <span class="envelope-flap-text">Surat buatmu</span>
+      <span style="font-size:16px;opacity:0.5;">✦</span>
+    </div>
+    <div class="letter-card">
+      <div class="letter-to">Untuk yang tercinta,</div>
+      <div class="letter-name">God Angel ✨</div>
+      <div class="letter-divider"></div>
+      <div class="letter-body">
+        <p>Heyy kumis, selamat ulang tahun ya kakk 🎂</p>
+        <p>Nggak kerasa udah sampe di hari spesial ini lagi. Aku nggak tau harus bilang apa dulu, soalnya perasaan ini terlalu banyak buat ditulis semuanya.</p>
+        <p>Tapi yang pasti — aku bersyukur banget bisa kenal kakak, bisa ada di sisi kakak, dan bisa jadi orang yang kakak pilih. Kakak tuh beneran spesial di mata aku, bukan karena apa-apa, tapi karena <em>dirimu sendiri kak.</em></p>
+        <p>Di hari lahir ulang tahunmu ini, aku cuma mau kamu tau kalau kamu dicintai dengan sepenuhnya. Semua kekurangan kamu, semua cerita kamu, semua hari baik dan hari susah kamu — aku mau ada di setiap momennya.</p>
+        <p>Semoga tahun ini bawa banyak kebaikan buat kamu. Banyak tawa, banyak mimpi yang kesampaian, dan makasih yaa udah ngubah hidup aku 💜</p>
+        <p>Aku sayang kamu kakk, selalu.</p>
+      </div>
+      <div class="letter-sign">
+        <button onclick="selesaiBacaSurat()" class="btn-primary" style="margin-top:20px; margin-bottom:40px;">
+  Aku udah baca 💜
+</button>
+        ~ From a little piece of heaven
+        <div class="letter-sign-sub">Deardo</div>
+      </div>
+      <div class="floating-hearts">
+        <span class="fh" style="--dur:4s;--delay:0s;right:0;bottom:0;">💜</span>
+        <span class="fh" style="--dur:5s;--delay:1s;right:30px;bottom:40px;">🌸</span>
+        <span class="fh" style="--dur:3.5s;--delay:2s;right:-10px;bottom:80px;">💫</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GAME PAGE -->
+<div id="game" class="page">
+  <div class="page-deco"></div>
+  <nav style="position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;justify-content:center;padding-top:20px;">
+    <div class="nav-inner" id="navGame"></div>
+  </nav>
+  <div class="game-container">
+    <div class="game-header">
+      <h2>🎮 Quiz</h2>
+      <p>Jawab 5 pertanyaan buat buka gembok</p>
+    </div>
+    <div id="gamePlay">
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill" style="width:0%"></div>
+      </div>
+      <div class="question-label" id="qLabel">Pertanyaan 1 dari 5</div>
+      <div class="question-text" id="qText"></div>
+      <div class="answers-grid" id="answersGrid"></div>
+      <div class="feedback-pill" id="feedbackPill"></div>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion();playClick()">Lanjut →</button>
+    </div>
+    <div class="game-result" id="gameResult">
+      <div class="result-glow" id="resultEmoji"></div>
+      <div class="result-score" id="resultScore"></div>
+      <div class="result-title" id="resultTitle"></div>
+      <div class="result-sub" id="resultSub"></div>
+      <button class="replay-btn" onclick="startGame();playClick()">🔄 Main Lagi</button>
+    </div>
+  </div>
+</div>
+
+<!-- SECRET LOCK PAGE -->
+<div id="secret-lock" class="page">
+  <div class="lock-bg"></div>
+  <div class="lock-grid"></div>
+  <nav style="position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;justify-content:center;padding-top:20px;">
+    <div class="nav-inner" id="navLock"></div>
+  </nav>
+  <div class="lock-container">
+    <div class="lock-ring">
+      <div class="lock-icon-inner">🔐</div>
+    </div>
+    <h2 class="lock-title">Hidden features</h2>
+    <p class="lock-sub">Petunjuknya ada di jawaban soal pertama.<br>Ubah jadi tanggal, lalu coba buka kuncinya ✨</p>
+    <div class="pin-display" id="pinDisplay">
+      <div class="pin-dot" id="d0"></div>
+      <div class="pin-dot" id="d1"></div>
+      <div class="pin-dot" id="d2"></div>
+      <div class="pin-dot" id="d3"></div>
+      <div class="pin-dot" id="d4"></div>
+      <div class="pin-dot" id="d5"></div>
+    </div>
+    <div class="pin-pad">
+      <button class="pin-key" onclick="pinPress('1');playPinClick()">1</button>
+      <button class="pin-key" onclick="pinPress('2');playPinClick()">2</button>
+      <button class="pin-key" onclick="pinPress('3');playPinClick()">3</button>
+      <button class="pin-key" onclick="pinPress('4');playPinClick()">4</button>
+      <button class="pin-key" onclick="pinPress('5');playPinClick()">5</button>
+      <button class="pin-key" onclick="pinPress('6');playPinClick()">6</button>
+      <button class="pin-key" onclick="pinPress('7');playPinClick()">7</button>
+      <button class="pin-key" onclick="pinPress('8');playPinClick()">8</button>
+      <button class="pin-key" onclick="pinPress('9');playPinClick()">9</button>
+      <button class="pin-key" onclick="pinDel();playPinClick()" style="font-size:16px;">⌫</button>
+      <button class="pin-key" onclick="pinPress('0');playPinClick()">0</button>
+      <button class="pin-key" style="opacity:0;pointer-events:none"></button>
+    </div>
+    <div class="wrong-pin-msg" id="wrongPinMsg"></div>
+  </div>
+</div>
+
+<!-- SECRET CONTENT PAGE -->
+<div id="secret-content" class="page">
+  <div id="memoryLoader" class="memory-loader">
+  <div class="memory-loader-inner">
+
+    <div class="memory-loader-ring"></div>
+
+    <div class="memory-loader-text">
+      loading memories...
+    </div>
+
+  </div>
+</div>
+  <div class="secret-bg"></div>
+  <nav style="position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;justify-content:center;padding-top:20px;">
+    <div class="nav-inner" id="navSecret"></div>
+  </nav>
+  <div class="secret-inner" style="position:relative;z-index:1;">
+    <div class="secret-header">
+
+      <div class="achievement-box">
+
+  <div class="achievement-label">
+    Achievement Unlocked
+  </div>
+
+  <div class="achievement-title">
+    The One Who Stayed 💜
+  </div>
+
+</div>
+    </div>
+
+    <div class="secret-long-text">
+  <div class="cinematic-overlay"></div>
+
+  <div class="cinematic-content">
+
+    <h2 class="memory-title">
+      Kenangan kita
+    </h2>
+
+    <p class="memory-desc">
+      Hai princess, makasii ya udah hadir sejauh ini.<br>
+      Maaf buat semua pertengkaran yang udah kita lalui.<br>
+      Aku simpan semua kenangan kecil kita di sini ❤️
+    </p>
+
+  </div>
+</div>
+
+<div class="memory-button-wrap">
+    <a href="LINK_WEBSITE_KAMU" target="_blank" class="memory-button" onclick="sendTelegramGalleryNotif(); setTimeout(()=>{}, 200)">
+        Buka galeri
+    </a>
+</div>
+
+  <!-- TOMBOL HADIAH -->
+  <div class="gift-btn-wrap">
+    <button class="gift-btn" onclick="openGiftPopup()">
+      🎁 Ambil Hadiahmu
+    </button>
+  </div>
+
+<!-- ===== GIFT POPUP NEW ===== -->
+
+<div id="giftPopup" class="gift-popup">
+
+  <div class="gift-card">
+
+    <button class="gift-close" onclick="closeGiftPopup()">
+      ✕
+    </button>
+
+    <!-- SLIDE 1 -->
+    <div class="gift-slide active-slide" id="slide1">
+
+      <div class="gift-emoji">💌</div>
+
+      <h2 class="gift-title">
+        Hadiah Pertama
+      </h2>
+
+      <p class="gift-text">
+        Kamu baru aja ngeliat hadiah yang pertama.<br>
+        Ini projectku 1 bulan lebih lohh 😭
+      </p>
+
+      <button class="gift-next-btn" onclick="nextGiftSlide(1)">
+        Lanjut →
+      </button>
+
+    </div>
+
+    <!-- SLIDE 2 -->
+    <div class="gift-slide" id="slide2">
+
+      <div class="gift-emoji">❓</div>
+
+      <h2 class="gift-title">
+        Hadiah Kedua
+      </h2>
+
+      <p class="gift-text">
+        Ada di 'Hadiah ketiga' wkwk 😝
+
+        
+      </p>
+
+      <div class="gift-actions">
+
+        <button class="gift-back-btn" onclick="prevGiftSlide(2)">
+          ← Back
+        </button>
+
+        <button class="gift-next-btn" onclick="nextGiftSlide(2)">
+          Lanjut →
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- SLIDE 3 -->
+    <div class="gift-slide" id="slide3">
+
+      <div class="gift-emoji">🎁</div>
+
+      <h2 class="gift-title">
+        Hadiah Ketiga
+      </h2>
+
+      <p class="gift-text">
+        Keluar dari kosmu sekarang, hadiahmu ada diluar.<br>Jangan lupa tekan tombol 'selesai' dulu yaa... 😘🫶
+      </p>
+
+      <div class="gift-actions">
+
+        <button class="gift-back-btn" onclick="prevGiftSlide(3)">
+          ← Back
+        </button>
+
+        <button class="gift-next-btn" onclick="giftAction(); closeGiftPopup()">
+          Selesai 💜
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+let suratSudahDibaca = false;
+let kuisSudahSelesai = false;
+
+function selesaiBacaSurat() {
+
+    suratSudahDibaca = true;
+
+    playSuccess();
+
+    sendTelegramSuratNotif();
+
+    setTimeout(() => {
+        showPage('home');
+    }, 500);
+}
+
+// ===== NAV BUILDER =====
+const navItems = [
+  { id: 'home', label: 'Home' },
+  { id: 'letter', label: '💌 Surat' },
+  { id: 'game', label: '🎮 Kuis' },
+];
+function buildNav(activePageId) {
+  return `
+    <span class="nav-logo">Made by : Dearr</span>
+    <div class="nav-sep"></div>
+    ${navItems.map(n => `<button class="nav-btn${activePageId===n.id?' active-nav':''}" onclick="showPage('${n.id}');playClick()">${n.label}</button>`).join('')}
+    <button class="nav-lock" onclick="checkAccess();playClick()" title="Hadiahmu">🔒</button>
+  `;
+}
+function renderAllNavs() {
+  const map = { navHome:'home', navLetter:'letter', navGame:'game', navLock:'secret-lock', navSecret:'secret-content' };
+  Object.entries(map).forEach(([navId, pageId]) => {
+    const el = document.getElementById(navId);
+    if (el) el.innerHTML = buildNav(pageId);
+  });
+}
+renderAllNavs();
+
+// ===== PAGE SWITCHING (FIXED) =====
+// Mapping display type per page
+const pageDisplayMap = {
+  'home': 'flex',
+  'letter': 'flex',
+  'game': 'flex',
+  'secret-lock': 'flex',
+  'secret-content': 'block'
+};
+
+function showPage(id) {
+  // Sembunyikan semua page
+  document.querySelectorAll('.page').forEach(p => {
+    p.style.display = 'none';
+    p.classList.remove('active');
+  });
+
+  // Tampilkan page yang dipilih
+  const el = document.getElementById(id);
+  if (el) {
+    el.classList.add('active');
+    el.style.display = pageDisplayMap[id] || 'block';
+    window.scrollTo(0, 0);
+  }
+
+  // 🔒 Lock scroll hanya di home
+  if (id === 'home') {
+    document.body.classList.add('lock-scroll');
+  } else {
+    document.body.classList.remove('lock-scroll');
+  }
+
+    if (id === 'secret-content') {
+
+    sendTelegramSecretNotif();
+
+    const loader =
+      document.getElementById('memoryLoader');
+
+    loader.classList.remove('hide');
+
+    setTimeout(() => {
+
+      loader.classList.add('hide');
+
+      playSuccess();
+
+    }, 1800);
+}
+}
+
+// Inisialisasi home page
+document.getElementById('home').style.display = 'flex';
+document.body.classList.add('lock-scroll');
+
+// ===== PARTICLE CANVAS =====
+const canvas = document.getElementById('particleCanvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+class Particle {
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.vx = (Math.random() - 0.5) * 0.4;
+    this.vy = (Math.random() - 0.5) * 0.4 - 0.2;
+    this.alpha = Math.random() * 0.6 + 0.1;
+    this.size = Math.random() * 2 + 0.5;
+    this.color = Math.random() > 0.5 ? '#a855f7' : '#ec4899';
+  }
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+    this.alpha -= 0.001;
+    if (this.alpha <= 0 || this.y < -10) this.reset();
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
+    ctx.fillStyle = this.color;
+    ctx.globalAlpha = this.alpha;
+    ctx.fill();
+  }
+}
+
+for (let i = 0; i < 120; i++) particles.push(new Particle());
+
+function animateParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.globalAlpha = 1;
+  particles.forEach(p => { p.update(); p.draw(); });
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+// ===== STARS =====
+function createStars(containerId, count) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  for (let i = 0; i < count; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random() * 3 + 1;
+    s.style.cssText = `
+      width:${size}px;height:${size}px;
+      left:${Math.random()*100}%;
+      top:${Math.random()*100}%;
+      --dur:${2+Math.random()*4}s;
+      --delay:${Math.random()*4}s;
+    `;
+    container.appendChild(s);
+  }
+}
+createStars('starsHome', 80);
+
+function playClick() {
+  try {
+    const ac = getAudioCtx();
+    const osc = ac.createOscillator();
+    const gain = ac.createGain();
+    osc.connect(gain);
+    gain.connect(ac.destination);
+    osc.frequency.setValueAtTime(800, ac.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(400, ac.currentTime + 0.1);
+    gain.gain.setValueAtTime(0.12, ac.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.15);
+    osc.start(ac.currentTime);
+    osc.stop(ac.currentTime + 0.15);
+  } catch(e) {}
+}
+
+function playPinClick() {
+  try {
+    const ac = getAudioCtx();
+    const osc = ac.createOscillator();
+    const gain = ac.createGain();
+    osc.type = 'sine';
+    osc.connect(gain);
+    gain.connect(ac.destination);
+    osc.frequency.setValueAtTime(600 + Math.random()*200, ac.currentTime);
+    gain.gain.setValueAtTime(0.08, ac.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.1);
+    osc.start(ac.currentTime);
+    osc.stop(ac.currentTime + 0.1);
+  } catch(e) {}
+}
+
+function playSuccess() {
+  try {
+    const ac = getAudioCtx();
+    const notes = [523, 659, 784, 1047];
+    notes.forEach((freq, i) => {
+      const osc = ac.createOscillator();
+      const gain = ac.createGain();
+      osc.connect(gain);
+      gain.connect(ac.destination);
+      osc.frequency.value = freq;
+      const t = ac.currentTime + i * 0.12;
+      gain.gain.setValueAtTime(0.15, t);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.3);
+      osc.start(t);
+      osc.stop(t + 0.3);
+    });
+  } catch(e) {}
+}
+
+function playError() {
+  try {
+    const ac = getAudioCtx();
+    const osc = ac.createOscillator();
+    const gain = ac.createGain();
+    osc.type = 'sawtooth';
+    osc.connect(gain);
+    gain.connect(ac.destination);
+    osc.frequency.setValueAtTime(200, ac.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(100, ac.currentTime + 0.3);
+    gain.gain.setValueAtTime(0.1, ac.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.3);
+    osc.start(ac.currentTime);
+    osc.stop(ac.currentTime + 0.3);
+  } catch(e) {}
+}
+
+// ===== PIN =====
+const SECRET_CODE = '100426';
+let pinInput = '';
+
+function pinPress(n) {
+  if (pinInput.length >= 6) return;
+  pinInput += n;
+  updateDots();
+  if (pinInput.length === 6) setTimeout(checkPin, 200);
+}
+function pinDel() {
+  pinInput = pinInput.slice(0, -1);
+  updateDots();
+  document.getElementById('wrongPinMsg').textContent = '';
+}
+function updateDots() {
+  for (let i = 0; i < 6; i++) {
+    document.getElementById('d' + i).classList.toggle('filled', i < pinInput.length);
+  }
+}
+function checkPin() {
+  if (pinInput === SECRET_CODE) {
+    playSuccess();
+    showPage('secret-content');
+    pinInput = '';
+    updateDots();
+  } else {
+    playError();
+    document.getElementById('wrongPinMsg').textContent = '❌ Kode salah, coba lagi...';
+    const disp = document.getElementById('pinDisplay');
+    disp.style.animation = 'wrongShake 0.4s ease';
+    setTimeout(() => { disp.style.animation = ''; pinInput = ''; updateDots(); }, 600);
+  }
+}
+
+// ===== GAME =====
+const questions = [
+  {
+    q: "Kamu ingat ga gunung apa yang pertama kali kita naikin bareng?",
+    opts: ["Kelud", "Bromo", "Lincing", "Penanggungan"],
+    correct: 0,
+    fb: { r: "Untung masih ingett 😝", w: "Kok lupa sii 😓" }
+  },
+  {
+    q: "Aku manggil kamu dengan julukan apa saat pertama kali ngobrol?",
+    opts: ["Angel", "Princess", "Tai", "Kumis"],
+    correct: 2,
+    fb: { r: "Wkwkk... taii taii 😹", w: "Salahh, masa dilupain sihh 🥱" }
+  },
+  {
+    q: "Apa yang kamu tulis di pohon harapan?",
+    opts: ["Semoga aku sehat selalu", "Semoga si Deardo dapet cewe berkumis", "Semoga tahun depan lebih baik dari tahun ini", "Semoga yang disemogakan tersemogakan"],
+    correct: 1,
+    fb: { r: "Dann benarr... aku dapet cewe berkumis ❤️", w: "Coba ingat-ingat lagii 😡" }
+  },
+  {
+    q: "Menurutmu Deardo nganggep kamu apa?",
+    opts: ["HTS", "Dunianya", "Orang yang dia sayang", "Teman biasa"],
+    correct: 1,
+    fb: { r: "Benerrr... KAMU ITU DUNIAKU KAKKK", w: "KOK SALAH SIHH, KAMU ITU DUNIAKUU 😡😡" }
+  },
+  {
+    q: "Apa hal pertama yang kita lakukan di awal kita mulai deket?",
+    opts: ["Ngopi", "Mandi bareng", "Naik gunung", "Gym bareng"],
+    correct: 3,
+    fb: { r: "Kamu masih ingat ternyata 🤭", w: "Kamu lupa yaa 🥲" }
+  }
+];
+
+let curQ = 0, score = 0, answered = false;
+
+function startGame() {
+  curQ = 0; score = 0; answered = false;
+  document.getElementById('gamePlay').style.display = 'block';
+  document.getElementById('gameResult').style.display = 'none';
+  loadQuestion();
+}
+
+function loadQuestion() {
+  answered = false;
+  const q = questions[curQ];
+  document.getElementById('qLabel').textContent = `Pertanyaan ${curQ+1} dari 5`;
+  document.getElementById('qText').textContent = q.q;
+  document.getElementById('progressFill').style.width = `${(curQ/5)*100}%`;
+  const grid = document.getElementById('answersGrid');
+  grid.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'answer-btn';
+    btn.textContent = opt;
+    btn.onclick = () => selectAnswer(i, btn);
+    grid.appendChild(btn);
+  });
+  const fp = document.getElementById('feedbackPill');
+  fp.className = 'feedback-pill';
+  fp.textContent = '';
+  document.getElementById('nextBtn').style.display = 'none';
+}
+
+function selectAnswer(idx, btn) {
+  if (answered) return;
+  answered = true;
+  playClick();
+  const q = questions[curQ];
+  document.querySelectorAll('.answer-btn').forEach(b => b.style.pointerEvents='none');
+  const fp = document.getElementById('feedbackPill');
+  if (idx === q.correct) {
+    btn.classList.add('correct');
+    score++;
+    fp.textContent = '🎉 ' + q.fb.r;
+    fp.className = 'feedback-pill show correct-fb';
+    playSuccess();
+  } else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('.answer-btn')[q.correct].classList.add('correct');
+    fp.textContent = '💭 ' + q.fb.w;
+    fp.className = 'feedback-pill show wrong-fb';
+    playError();
+  }
+  document.getElementById('nextBtn').style.display = 'block';
+}
+
+function nextQuestion() {
+  curQ++;
+  if (curQ >= 5) showResult();
+  else loadQuestion();
+}
+
+function showResult() {
+  kuisSudahSelesai = true;
+  sendTelegramQuizNotif();
+  document.getElementById('progressFill').style.width = '100%';
+  document.getElementById('gamePlay').style.display = 'none';
+  const res = document.getElementById('gameResult');
+  res.style.display = 'block';
+  const pct = score/5;
+  let emoji, title, sub;
+  if (pct===1) { emoji='🎊'; title='Sempurna!'; sub='Hoki aja sih bisa jawab semua 🤮'; }
+  else if (pct>=0.6) { emoji='💜'; title='Keren banget!'; sub='Hampir bener semua jirr 🤭'; }
+  else { emoji='🌸'; title='Good try!'; sub='Gak ngerti nya akuu, tapi gas lahh... Coba lagi!! 😒'; }
+  document.getElementById('resultEmoji').textContent = emoji;
+  document.getElementById('resultScore').textContent = `${score}/5`;
+  document.getElementById('resultTitle').textContent = title;
+  document.getElementById('resultSub').textContent = sub;
+  playSuccess();
+}
+
+// ===== CINEMATIC COUNTDOWN =====
+
+window.addEventListener("load", () => {
+
+  const numberEl = document.getElementById("countdownNumber");
+  const introText = document.getElementById("introText");
+
+  const counts = ["3", "2", "1", "💜"];
+
+  let index = 0;
+
+  // delay awal
+  setTimeout(() => {
+
+    // fade text
+    introText.style.opacity = "0";
+
+    setTimeout(() => {
+
+      introText.style.display = "none";
+
+      // munculin countdown
+      numberEl.style.display = "flex";
+      numberEl.textContent = counts[index];
+
+      playClick();
+
+      const interval = setInterval(() => {
+
+        index++;
+
+        if(index >= counts.length){
+
+          clearInterval(interval);
+
+          document.getElementById("introScreen")
+            .style.opacity = "0";
+
+          setTimeout(() => {
+
+  document.getElementById("introScreen")
+    .style.display = "none";
+
+  document.body.classList.add('lock-scroll');
+
+  const home =
+    document.getElementById('home');
+
+  home.style.filter = 'blur(0px)';
+  home.style.transform = 'scale(1)';
+  home.style.opacity = '1';
+
+  showPage('home');
+
+            // ===== PLAY MUSIC =====
+            const audio = document.getElementById('bgAudio');
+
+            audio.volume = 0;
+
+            audio.play().catch(() => {
+              console.log("Autoplay diblok browser");
+            });
+
+            let vol = 0;
+
+            const fade = setInterval(() => {
+
+              vol += 0.02;
+
+              if(vol >= 0.5){
+                vol = 0.5;
+                clearInterval(fade);
+              }
+
+              audio.volume = vol;
+
+            }, 120);
+
+          }, 800);
+
+          return;
+        }
+
+        numberEl.style.animation = "none";
+        void numberEl.offsetWidth;
+
+        numberEl.textContent = counts[index];
+
+        numberEl.style.animation = "countPulse 1s ease";
+
+        playClick();
+
+      }, 1000);
+
+    }, 500);
+
+  }, 1800);
+
+});
+
+function checkAccess() {
+  if (!suratSudahDibaca) {
+    alert("Baca suratnya dulu ya 💌");
+    showPage('letter');
+    return;
+  }
+
+  if (!kuisSudahSelesai) {
+    alert("Selesaikan kuis dulu ya 🎮");
+    showPage('game');
+    return;
+  }
+
+  showPage('secret-lock');
+}
+function openGiftPopup(){
+
+    document
+      .getElementById("giftPopup")
+      .classList.add("show");
+
+    document
+      .querySelectorAll(".gift-slide")
+      .forEach(el => el.classList.remove("active-slide"));
+
+    document
+      .getElementById("slide1")
+      .classList.add("active-slide");
+
+    playSuccess();
+}
+
+function closeGiftPopup(){
+
+    document
+      .getElementById("giftPopup")
+      .classList.remove("show");
+
+    playClick();
+}
+
+function nextGiftSlide(current){
+
+    document
+      .getElementById(`slide${current}`)
+      .classList.remove("active-slide");
+
+    document
+      .getElementById(`slide${current+1}`)
+      .classList.add("active-slide");
+
+    playClick();
+}
+
+function prevGiftSlide(current){
+
+    document
+      .getElementById(`slide${current}`)
+      .classList.remove("active-slide");
+
+    document
+      .getElementById(`slide${current-1}`)
+      .classList.add("active-slide");
+
+    playClick();
+}
+window.addEventListener('load', () => {
+
+  const audio = document.getElementById('bgAudio');
+
+  if(audio){
+    audio.volume = 0.5; // atur ini (0.0 - 1.0)
+  }
+
+});
+function sendTelegramNotif() {
+  const waktu = new Date().toLocaleString('id-ID');
+
+  const text =
+`🚨 𝐍𝐎𝐓𝐈𝐅 𝐖𝐄𝐁𝐒𝐈𝐓𝐄
+𝘎𝘰𝘥 𝘈𝘯𝘨𝘦𝘭 sudah mencapai hadiah terakhir.
+𝗦𝘁𝗮𝘁𝘂𝘀: akan keluar kamar.
+𝗪𝗮𝗸𝘁𝘂: ${waktu}
+Segera persiapkan kejutannya, Good Luck.`;
+
+  const url =
+`https://api.telegram.org/bot8221832114:AAE8jV3oyY1t6cj-qsk3hEPz6j3XCWzG0JQ/sendMessage?chat_id=7419682614&text=${encodeURIComponent(text)}`;
+
+  fetch(url);
+}
+function giftAction() {
+  sendTelegramNotif();
+}
+function sendTelegramSuratNotif() {
+  const waktu = new Date().toLocaleString('id-ID');
+
+  const text =
+`💌 𝐍𝐎𝐓𝐈𝐅 𝐒𝐔𝐑𝐀𝐓
+𝘎𝘰𝘥 𝘈𝘯𝘨𝘦𝘭 sudah membaca surat.
+𝗦𝘁𝗮𝘁𝘂𝘀: lanjut ke home
+𝗪𝗮𝗸𝘁𝘂: ${waktu}`;
+
+  const url =
+`https://api.telegram.org/bot8221832114:AAE8jV3oyY1t6cj-qsk3hEPz6j3XCWzG0JQ/sendMessage?chat_id=7419682614&text=${encodeURIComponent(text)}`;
+
+  fetch(url);
+}
+function sendTelegramQuizNotif() {
+  const waktu = new Date().toLocaleString('id-ID');
+
+  const text =
+`🎮 𝐍𝐎𝐓𝐈𝐅 𝐐𝐔𝐈𝐙
+𝘎𝘰𝘥 𝘈𝘯𝘨𝘦𝘭 sudah menyelesaikan kuis.
+𝗦𝗰𝗼𝗿𝗲: ${score}/5
+𝗦𝘁𝗮𝘁𝘂𝘀: lanjut ke lock
+𝗪𝗮𝗸𝘁𝘂: ${waktu}`;
+
+  const url =
+`https://api.telegram.org/bot8221832114:AAE8jV3oyY1t6cj-qsk3hEPz6j3XCWzG0JQ/sendMessage?chat_id=7419682614&text=${encodeURIComponent(text)}`;
+
+  fetch(url);
+}
+function sendTelegramSecretNotif() {
+  const waktu = new Date().toLocaleString('id-ID');
+
+  const text =
+`🔐 𝐍𝐎𝐓𝐈𝐅 𝐒𝐄𝐂𝐑𝐄𝐓 𝐀𝐂𝐂𝐄𝐒𝐒
+𝘎𝘰𝘥 𝘈𝘯𝘨𝘦𝘭 masuk ke Hidden Features
+𝗦𝘁𝗮𝘁𝘂𝘀: berhasil buka semua stage
+𝗪𝗮𝗸𝘁𝘂: ${waktu}`;
+
+  const url =
+`https://api.telegram.org/bot8221832114:AAE8jV3oyY1t6cj-qsk3hEPz6j3XCWzG0JQ/sendMessage?chat_id=7419682614&text=${encodeURIComponent(text)}`;
+
+  fetch(url);
+}
+function sendTelegramGalleryNotif() {
+  const waktu = new Date().toLocaleString('id-ID');
+
+  const text =
+`🖼️ 𝐍𝐎𝐓𝐈𝐅 𝐆𝐀𝐋𝐄𝐑𝐈
+𝘎𝘰𝘥 𝘈𝘯𝘨𝘦𝘭 membuka halaman galeri foto & video
+𝗦𝘁𝗮𝘁𝘂𝘀: tertarik ke memory
+𝗪𝗮𝗸𝘁𝘂: ${waktu}`;
+
+  const url =
+`https://api.telegram.org/bot8221832114:AAE8jV3oyY1t6cj-qsk3hEPz6j3XCWzG0JQ/sendMessage?chat_id=7419682614&text=${encodeURIComponent(text)}`;
+
+  fetch(url);
+}
+startGame();
+</script>
+</body>
+</html>
